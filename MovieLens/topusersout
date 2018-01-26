@@ -1,0 +1,61 @@
+K-12 student::18-35::Film-Noir::War::Animation::Musical::Drama
+K-12 student::50+::Documentary::Film-Noir::Mystery::Drama::Musical
+academic/educator::18-35::Film-Noir::Documentary::War::Animation::Drama
+academic/educator::36-50::Film-Noir::Documentary::War::Mystery::Crime
+academic/educator::50+::Film-Noir::Mystery::War::Drama::Documentary
+artist::18-35::Film-Noir::Documentary::War::Drama::Mystery
+artist::36-50::War::Film-Noir::Documentary::Crime::Mystery
+artist::50+::War::Musical::Fantasy::Adventure::Animation
+clerical/admin::18-35::Film-Noir::War::Musical::Documentary::Animation
+clerical/admin::36-50::Film-Noir::War::Animation::Documentary::Mystery
+clerical/admin::50+::War::Documentary::Crime::Film-Noir::Thriller
+college/grad student::18-35::Film-Noir::Documentary::War::Drama::Crime
+college/grad student::36-50::Documentary::Musical::Film-Noir::Animation::War
+customer service::18-35::Film-Noir::Documentary::War::Animation::Drama
+customer service::36-50::Film-Noir::Animation::Musical::War::Drama
+customer service::50+::Musical::Crime::Comedy::Drama::Action
+doctor/health care::18-35::Documentary::War::Film-Noir::Drama::Crime
+doctor/health care::36-50::Film-Noir::War::Documentary::Drama::Western
+doctor/health care::50+::War::Drama::Mystery::Western::Film-Noir
+executive/managerial::18-35::Film-Noir::Documentary::War::Drama::Crime
+executive/managerial::36-50::Film-Noir::Documentary::War::Animation::Drama
+executive/managerial::50+::War::Western::Film-Noir::Thriller::Action
+farmer::18-35::Film-Noir::Western::War::Fantasy::Musical
+farmer::36-50::Film-Noir::Documentary::War::Drama::Western
+farmer::50+::Thriller::Western::Crime::Mystery::Animation
+homemaker::18-35::Documentary::War::Drama::Musical::Romance
+homemaker::36-50::Musical::Animation::Children's::War::Documentary
+homemaker::50+::Crime::Film-Noir::Thriller::Mystery::War
+lawyer::18-35::Documentary::Film-Noir::War::Drama::Animation
+lawyer::36-50::Film-Noir::Documentary::War::Crime::Musical
+lawyer::50+::Documentary::Film-Noir::War::Drama::Crime
+other::18-35::Film-Noir::Documentary::War::Drama::Animation
+other::36-50::Film-Noir::War::Drama::Musical::Mystery
+other::50+::Film-Noir::War::Musical::Western::Documentary
+programmer::18-35::Film-Noir::War::Drama::Documentary::Crime
+programmer::36-50::Film-Noir::Documentary::War::Mystery::Drama
+programmer::50+::Western::Animation::War::Film-Noir::Musical
+retired::18-35::Film-Noir::War::Documentary::Crime::Drama
+retired::36-50::Film-Noir::War::Mystery::Drama::Documentary
+retired::50+::Film-Noir::War::Documentary::Mystery::Drama
+sales/marketing::18-35::Film-Noir::Documentary::War::Drama::Animation
+sales/marketing::36-50::Film-Noir::War::Drama::Western::Musical
+sales/marketing::50+::Film-Noir::Musical::Drama::Documentary::Crime
+scientist::18-35::Film-Noir::Documentary::War::Animation::Western
+scientist::36-50::Film-Noir::Musical::War::Fantasy::Mystery
+scientist::50+::Documentary::Film-Noir::Crime::Drama::Thriller
+self-employed::18-35::Film-Noir::Documentary::War::Drama::Crime
+self-employed::36-50::Film-Noir::War::Documentary::Drama::Musical
+self-employed::50+::Documentary::Film-Noir::War::Drama::Animation
+technician/engineer::18-35::Film-Noir::Documentary::War::Drama::Animation
+technician/engineer::36-50::Film-Noir::Documentary::War::Drama::Western
+technician/engineer::50+::Musical::War::Film-Noir::Romance::Animation
+tradesman/craftsman::18-35::Film-Noir::War::Drama::Animation::Western
+tradesman/craftsman::36-50::Western::War::Mystery::Film-Noir::Animation
+tradesman/craftsman::50+::Musical::Film-Noir::Crime::War::Drama
+unemployed::18-35::Film-Noir::Documentary::War::Crime::Drama
+unemployed::36-50::Film-Noir::Documentary::Crime::Mystery::Animation
+unemployed::50+::Musical::Film-Noir::War::Mystery::Western
+writer::18-35::Film-Noir::Documentary::War::Animation::Musical
+writer::36-50::Film-Noir::Documentary::War::Musical::Crime
+writer::50+::Film-Noir::Drama::War::Western::Documentary

@@ -1,0 +1,104 @@
+**************************************************************************************************************
+//creating table to store the tweets. It will take only tweetID and text from twitter raw data 
+
+create external table tweet_rawdata(id BIGINT,text STRING) ROW FORMAT SERDE 'com.cloudera.hive.serde.JSONSerDe' 
+LOCATION '/flume/tweets';
+
+******************************************************************************************************************
+
+// Creating table to store the english words and its polarity(positive and negative)
+
+CREATE EXTERNAL TABLE dictionary (
+type string,
+length int,
+word string,
+pos string,
+stemmed string,
+polarity string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' 
+STORED AS TEXTFILE
+LOCATION '/dict/dictionary.tsv';
+
+**************************************************************************************************************
+
+// Creating view to convert the tweet sentence into array of words
+
+create view parse1 as select id, words from tweet_rawdata lateral view explode(sentences(lower(text))) dummy as words;
+
+
+
+// creating view to store each word from array as single row:
+
+create view parse2 as select id, word from parse1 lateral view explode( words ) dummy as word ;
+
+
+/* example :
+ID           Tweet
+1           iphone 10 is great
+
+ID           Parse1
+1           [iphone,10,is,great]
+
+ID	     Parse2
+1    	     iphone
+1            10
+1	     is
+1	     great
+*/
+	
+***********************************************************************************************************
+// creating view to join parse2 table and dictionary table based on ID.
+// Now we have polarity for each word
+
+create view parse3 as select 
+    id, 
+    parse2.word, 
+    case d.polarity 
+      when  'negative' then -1
+      when 'positive' then 1 
+      else 0 end as polarity 
+ from parse2 left outer join dictionary d on parse2.word = d.word;
+
+***********************************************************************************************************
+
+//Creating final table to store tweet id and its response.
+// Here we sum up all the polarity for the ID, by grouping them
+ 
+create table tweet_sentiment as select 
+  id, 
+  case 
+    when sum( polarity ) > 0 then 'positive' 
+    when sum( polarity ) < 0 then 'negative'  
+    else 'neutral' end as sentiment 
+ from parse3 group by id;
+
+
+*********************************************************************************************************
+
+select s.id,d.text,s.sentiment from tweet_rawdata d , tweet_sentiment s where d.id = s.id;
+
+select count(*) from tweet_sentiment;  // 919
+
+select count(*) from tweet_sentiment where sentiment = 'positive';  // 456 
+
+select count(*) from tweet_sentiment where sentiment = 'negative';  // 176
+
+select count(*) from tweet_sentiment where sentiment = 'neutral';   // 287
+****************************************************************************************************
+
+select ((positive_count*100)/total_count) as positive_response,
+((negative_count*100)/total_count) as negative_response,
+((neutral_count*100)/total_count) as neutral_response
+from
+(select count(*) as total_count from tweet_sentiment) total,
+(select count(*) as positive_count from tweet_sentiment where sentiment = 'positive') pos,
+(select count(*) as negative_count from tweet_sentiment where sentiment = 'negative') neg,  
+(select count(*) neutral_count from tweet_sentiment where sentiment = 'neutral') neut;
+
+Output:
+positive_response	negative_response	neutral_response	
+49.61915125136017	19.1512513601741	31.229597388465724
+
+
+*************************************************************************************************

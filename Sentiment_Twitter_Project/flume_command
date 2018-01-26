@@ -1,0 +1,9 @@
+flume-ng agent -n TwitterAgent -c conf -f /home/hduser/flume/conf/flume.conf
+
+	
+
+
+
+
+
+
