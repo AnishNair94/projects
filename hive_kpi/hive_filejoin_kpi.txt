@@ -1,0 +1,66 @@
+1) Creating Employee table and loading data
+**********************************************************************************************************
+CREATE TABLE emp_tab (empid INT, empname STRING)
+row format delimited
+fields TERMINATED by ',';
+
+
+LOAD DATA LOCAL INPATH '/home/hduser/eclipse-workspace/FileJoin/empname.txt' OVERWRITE INTO TABLE EMP_TAB;
+***********************************************************************************************************
+
+
+2) creating Department Table and Loading Data
+*********************************************************************************************************
+CREATE TABLE dept_tab (empid INT, deptname STRING)
+row format delimited
+fields TERMINATED by ',';
+
+LOAD DATA LOCAL INPATH '/home/hduser/eclipse-workspace/FileJoin/empdept.txt' OVERWRITE INTO TABLE DEPT_TAB;
+********************************************************************************************************
+
+3) Creating Table to Join both emp and dept table
+*****************************************************************************************
+
+create table emp_dept
+AS
+select e.empid, e.empname, d.deptname from emp_tab e, dept_tab d where e.empid = d.empid;
+
+******************************************************************************************
+
+
+CREATE TABLE movie_tab(
+  movieid string,
+  moviename string,
+  Genres string) 
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe' 
+WITH serdeproperties("input.regex" = "(.+)::(.+)::(.+)",
+"output.format.string" = "%1$s %2$s %3$s")
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH '/home/hduser/eclipse-workspace/Movies/movies.dat' OVERWRITE INTO TABLE MOVIE_TAB;
+
+
+
+CREATE TABLE rating_tab(
+  userId string,
+  movieId string,
+  rating string,
+  time string) 
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe' 
+WITH serdeproperties("input.regex" = "(.+)::(.+)::(.+)::(.+)",
+"output.format.string" = "%1$s %2$s %3$s %4$s")
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH '/home/hduser/eclipse-workspace/Movies/ratings.dat' OVERWRITE INTO TABLE Rating_TAB;
+
+
+create table movie_rating
+AS
+select m.movieid, m.moviename, r.rating from movie_tab m, rating_tab r where m.movieid = r.movieid;
+
+select movieid,count(movieid) from movie_rating where movieid = 100 group by movieid;
+
+
+
+
+

@@ -1,0 +1,105 @@
+
+CREATE EXTERNAL TABLE weblogtab
+(
+remoteIP STRING,
+remoteLogname STRING,
+user STRING,
+time STRING,
+request STRING,
+statusCode STRING,
+byteString STRING,
+referral STRING,
+browser STRING
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+"input.regex" = '^(\\S+) (\\S+) (\\S+) \\[(.+?)\\] \"([^\"]*)\" (\\S+) (\\S+) \"([^\"]*)\" \"([^\"]*)\"',
+"output.format.string" = "%1$s %2$s %3$s %4$s %5$s %6$s %7$s %8$s %9$s")
+LOCATION '/weblogdata';
+
+******************************************************************************************
+ADD JAR /home/hduser/hive/lib/hive-contrib-0.13.1-cdh5.3.2.jar; 
+
+******************************************************************************************
+
+
+******************************************************************************************
+Exclude status code other than 200, also exclude record related to css/js/image)
+
+create table weblog
+AS
+select * from weblogtab where statusCode = '200' AND request NOT LIKE '%css/js/image%';
+*****************************************************************************************
+
+
+
+*****************************************************************************************
+Total pageviews
+select request,count(request)  from weblog group by request limit 5;
+*****************************************************************************************
+
+
+
+**************************************************************************************
+Unique pageview
+select distinct request from weblog;
+***************************************************************************************
+
+********************************************************************************************
+Splitting the URL
+
+select split(regexp_replace(request,'GET |HTTP/1.1|',''),'[/]') from weblog;
+*********************************************************************************************
+
+
+
+***************************************************************************************
+Top 5 PageViews
+
+select split(regexp_replace(request,'HTTP',''),'[/]')[3],countr from(
+select * from (select request,count(request) AS countr  from weblog group by request) tab1 ORDER BY tab1.countr DESC
+) tab2
+LIMIT 5;
+
+Using UDF row_number()
+
+select split(regexp_replace(request,'HTTP',''),'[/]')[3],prank
+FROM(
+SELECT ranktab.request, row_number() over (ORDER BY reqcount DESC) AS prank
+FROM (select request,count(request) AS reqcount from
+weblog group by request) ranktab
+) ranktab2
+where ranktab2.prank <= 5;
+
+Output:
+lg-lsa3mp3m-split-air-conditioner-1-ton.html 	1
+amazon-kindle-paperwhite-e-reader-2-gb-black.html 	1
+reconnect-rebtg2002-bluetooth-receiver.html 	2
+samsung-wf1650wcw-tl-fully-automatic-washing-machine-white.html 	2
+onkyo-avx-390-home-theatre-system.html 	2
+
+
+*********************************************************************************************
+
+
+
+
+*********************************************************************************************
+Bottom 5 Page 
+
+select split(regexp_replace(request,'HTTP',''),'[/]')[3],countr from(
+select * from(
+select * from (select request,count(request) AS countr  from weblog group by request) tab1 ORDER BY tab1.countr DESC
+) tab2 ORDER BY tab2.countr ASC
+)tab3
+LIMIT 5;
+*********************************************************************************************
+
+
+
+
+
+
+
+
+
