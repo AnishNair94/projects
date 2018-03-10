@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/AnishNair/IdeaProjects/Retail/src/main/scala/DailyRevPerDepartment.scala:90:5: ')' expected but '}' found.[0m
+[0m[[0m[31merror[0m] [0m[0m    })[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/AnishNair/IdeaProjects/Retail/src/main/scala/DailyRevPerDepartment.scala:94:13: identifier expected but ')' found.[0m
+[0m[[0m[31merror[0m] [0m[0m      (line.)[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
